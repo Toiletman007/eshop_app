@@ -76,7 +76,20 @@ class _MyHomePageState extends State<MyHomePage> {
               icon: const Icon(Icons.notifications),
               tooltip: 'Notifikace',
               onPressed: () {
-                context.push('/notifpage');
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled:
+                      true, // Umožní ti upravit si výšku podle sebe
+                  backgroundColor: Colors.white,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.circular(20)), // Hezké zaoblené rohy
+                  ),
+                  builder: (context) {
+                    return const NotificationPage(); // Zobrazíme v něm tvou stránku
+                  },
+                );
+                //context.push('/notifpage');
               },
               iconSize: 35,
             )
