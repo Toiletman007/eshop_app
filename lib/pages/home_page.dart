@@ -5,10 +5,22 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        'domovska stranka',
-        style: TextStyle(fontSize: 24),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 15.0),
+      child: Column(
+        children: [
+          SearchBar(
+              hintText: "Vyhledej!",
+              leading: const Icon(Icons.search),
+              trailing: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.tune,
+                      color: Colors.grey,
+                    )),
+              ]),
+        ],
       ),
     );
   }
