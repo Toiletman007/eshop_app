@@ -2,10 +2,15 @@ import 'package:eshop_app/pages/cart_page.dart';
 import 'package:eshop_app/pages/home_page.dart';
 import 'package:eshop_app/pages/profile_page.dart';
 import 'package:eshop_app/pages/notification_page.dart';
+import 'package:eshop_app/pages/sharp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Stripe.publishableKey =
+      'pk_test_51UTJeHHwqv3HvPnPJnam3URxnqFvNlK99uGDZBISYt1gPQPxKhFWVKP31xOeP2xK9rUOZ2eM6hHW3APT2SOF6tFg005dQcVMZG';
   runApp(const MyApp());
 }
 
@@ -53,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> pages = [
     const HomePage(),
     const CartPage(),
-    const ProfilePage(),
+    const SharpPage(),
+    const ProfilePage()
   ];
 
   @override
@@ -106,10 +112,15 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Košík',
           ),
           NavigationDestination(
+            icon: Icon(Icons.shield_sharp),
+            selectedIcon: Icon(Icons.shield_sharp),
+            label: 'Broušení nožů',
+          ),
+          NavigationDestination(
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
             label: 'Profil',
-          )
+          ),
         ],
       ),
     );
