@@ -1,16 +1,25 @@
+import 'package:eshop_app/firebase_options.dart';
 import 'package:eshop_app/pages/cart_page.dart';
 import 'package:eshop_app/pages/home_page.dart';
-import 'package:eshop_app/pages/profile_page.dart';
 import 'package:eshop_app/pages/notification_page.dart';
+import 'package:eshop_app/pages/profile_page.dart';
 import 'package:eshop_app/pages/sharp_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:go_router/go_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Stripe.publishableKey =
-      'pk_test_51UTJeHHwqv3HvPnPJnam3URxnqFvNlK99uGDZBISYt1gPQPxKhFWVKP31xOeP2xK9rUOZ2eM6hHW3APT2SOF6tFg005dQcVMZG';
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  if (!kIsWeb) {
+    Stripe.publishableKey =
+        'pk_test_51UTJeHHwqv3HvPnPJnam3URxnqFvNlK99uGDZBISYt1gPQPxKhFWVKP31xOeP2xK9rUOZ2eM6hHW3APT2SOF6tFg005dQcVMZG';
+  }
   runApp(const MyApp());
 }
 
@@ -19,16 +28,11 @@ final GoRouter router = GoRouter(initialLocation: '/', routes: [
     path: '/',
     builder: (context, state) => const MyHomePage(title: "Eshop app"),
   ),
-  //GoRoute(
-  //path: '/notifpage',
-  //builder: (context, state) => const NotificationPage(),
-  //)
 ]);
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
@@ -75,15 +79,14 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {
                 showModalBottomSheet(
                   context: context,
-                  isScrollControlled:
-                      true, // Umožní ti upravit si výšku podle sebe
+                  isScrollControlled: true,
                   backgroundColor: Colors.white,
                   shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                        top: Radius.circular(20)), // Hezké zaoblené rohy
+                    borderRadius:
+                        BorderRadius.vertical(top: Radius.circular(20)),
                   ),
                   builder: (context) {
-                    return const NotificationPage(); // Zobrazíme v něm tvou stránku
+                    return const NotificationPage();
                   },
                 );
                 //context.push('/notifpage');
@@ -95,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: selectedIndex,
         onDestinationSelected: (int index) {
-          // setState vynutí překreslení UI s novým indexem
           setState(() {
             selectedIndex = index;
           });
