@@ -2,6 +2,8 @@
 # To get started, simply uncomment the below code or create your own.
 # Deploy with `firebase deploy`
 
+import os
+
 from firebase_functions import https_fn
 from firebase_functions.options import set_global_options
 from firebase_admin import initialize_app
@@ -21,7 +23,7 @@ initialize_app()
 # def on_request_example(req: https_fn.Request) -> https_fn.Response:
 #     return https_fn.Response("Hello world!")
 
-stripe.api_key = ""
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 
 MIN_AMOUNT_BY_CURRENCY = {
     "czk": 1500,
